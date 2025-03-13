@@ -1,7 +1,10 @@
+html {
+  background-color: #F2F2F7;
+}
+
 body {
   width: 350px;
   padding: 15px;
-  font-family: Arial, sans-serif;
   margin: 0;
 }
 
@@ -12,7 +15,8 @@ body {
 h1 {
   font-size: 1.2em;
   margin: 0 0 15px 0;
-  color: #2c3e50;
+  color: #1C1C1E;
+  font-weight: 600;
 }
 
 .input-section {
@@ -23,24 +27,30 @@ h1 {
 
 #urlInput {
   flex: 1;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 0.9em;
+  padding: 10px;
+  border: 1px solid #C7C7CC;
+  border-radius: 6px;
+  transition: border-color 0.2s ease-in-out;
+  background-color: #FFFFFF;
+}
+
+#urlInput:focus {
+  border-color: #007AFF;
+  outline: none;
 }
 
 button {
-  padding: 8px 15px;
-  background-color: #3498db;
-  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9em;
+  font-weight: 500;
+  background-image: linear-gradient(to bottom right, #007AFF, #005BBB);
+  color: #FFFFFF;
 }
 
 button:hover {
-  background-color: #2980b9;
+  background-image: linear-gradient(to bottom right, #005BBB, #004899);
 }
 
 #urlList {
@@ -53,25 +63,28 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+  padding: 12px;
+  border-bottom: 1px solid #E5E5EA;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  margin-bottom: 8px;
 }
 
 .remove-btn {
-  background-color: #e74c3c;
-  padding: 5px 10px;
-  font-size: 0.8em;
+  background-image: linear-gradient(to bottom right, #FF3B30, #D70015);
+  padding: 8px 16px;
+  font-size: 1em;
 }
 
 .remove-btn:hover {
-  background-color: #c0392b;
+  background-image: linear-gradient(to bottom right, #D70015, #B80012);
 }
 
 .toggle-switch {
   position: relative;
   display: inline-block;
-  width: 45px;
-  height: 22px;
+  width: 51px;
+  height: 27px;
 }
 
 .toggle-slider {
@@ -81,27 +94,36 @@ button:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: #E5E5EA;
   transition: .4s;
-  border-radius: 34px;
+  border-radius: 16px;
 }
 
 .toggle-slider:before {
   position: absolute;
   content: "";
-  height: 16px;
-  width: 16px;
-  left: 3px;
-  bottom: 3px;
+  height: 23px;
+  width: 23px;
+  left: 2px;
+  bottom: 2px;
   background-color: white;
-  transition: .4s;
+  transition: .2s;
   border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 input:checked + .toggle-slider {
-  background-color: #3498db;
+  background-color: #34C759;
 }
 
 input:checked + .toggle-slider:before {
-  transform: translateX(22px);
+  transform: translateX(24px);
+}
+
+body > *:last-child {
+  margin-bottom: 0;
+}
+
+#urlList li:last-child {
+  margin-bottom: 0;
 }
