@@ -3,7 +3,11 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
 
   chrome.storage.local.get(["blockedUrls"], (data) => {
     const blockedUrls = data.blockedUrls || [];
-    if (blockedUrls.includes(details.url)) {
+    const isBlocked = blockedUrls.some(
+      (site) => site.url === details.url && site.enabled
+    );
+
+    if (isBlocked) {
       chrome.tabs.update(details.tabId, { url: "chrome://newtab/" });
     }
   });

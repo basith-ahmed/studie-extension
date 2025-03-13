@@ -17,8 +17,8 @@ function addUrl() {
     const validUrl = new URL(urlInput).href;
     chrome.storage.local.get(["blockedUrls"], (data) => {
       const blockedUrls = data.blockedUrls || [];
-      if (!blockedUrls.includes(validUrl)) {
-        blockedUrls.push(validUrl);
+      if (!blockedUrls.some((item) => item.url === validUrl)) {
+        blockedUrls.push({ url: validUrl, enabled: true });
         chrome.storage.local.set({ blockedUrls }, () => {
           document.getElementById("urlInput").value = "";
           renderUrls(blockedUrls);
@@ -33,23 +33,45 @@ function addUrl() {
 function renderUrls(urls) {
   const urlList = document.getElementById("urlList");
   urlList.innerHTML = "";
-  urls.forEach((url) => {
+  urls.forEach((site) => {
     const li = document.createElement("li");
     li.innerHTML = `
-      <span>${url}</span>
-      <button class="remove-btn">Remove</button>
+      <div class="site-control">
+        <label class="toggle-switch">
+          <input type="checkbox" ${site.enabled ? "checked" : ""}>
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="url">${site.url}</span>
+      </div>
+      <button class="remove-btn">Delete</button>
     `;
+
+    const toggle = li.querySelector('input[type="checkbox"]');
+    toggle.addEventListener("change", () =>
+      toggleUrl(site.url, toggle.checked)
+    );
+
     li.querySelector(".remove-btn").addEventListener("click", () => {
-      removeUrl(url);
+      removeUrl(site.url);
     });
+
     urlList.appendChild(li);
+  });
+}
+
+function toggleUrl(url, enabled) {
+  chrome.storage.local.get(["blockedUrls"], (data) => {
+    const blockedUrls = (data.blockedUrls || []).map((site) =>
+      site.url === url ? { ...site, enabled } : site
+    );
+    chrome.storage.local.set({ blockedUrls });
   });
 }
 
 function removeUrl(urlToRemove) {
   chrome.storage.local.get(["blockedUrls"], (data) => {
     let blockedUrls = data.blockedUrls || [];
-    blockedUrls = blockedUrls.filter((url) => url !== urlToRemove);
+    blockedUrls = blockedUrls.filter((site) => site.url !== urlToRemove);
     chrome.storage.local.set({ blockedUrls }, () => {
       renderUrls(blockedUrls);
     });
