@@ -34,6 +34,8 @@ function renderUrls(urls) {
   const urlList = document.getElementById("urlList");
   urlList.innerHTML = "";
   urls.forEach((site) => {
+    const domain = new URL(site.url).hostname.replace(/^www\./, "");
+
     const li = document.createElement("li");
     li.innerHTML = `
       <div class="site-control">
@@ -41,7 +43,7 @@ function renderUrls(urls) {
           <input type="checkbox" ${site.enabled ? "checked" : ""}>
           <span class="toggle-slider"></span>
         </label>
-        <span class="url">${site.url}</span>
+        <span class="url">${domain}</span>
       </div>
       <button class="remove-btn">Delete</button>
     `;
