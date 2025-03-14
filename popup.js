@@ -1,6 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   loadUrls();
   document.getElementById("addBtn").addEventListener("click", addUrl);
+
+  document.getElementById("urlInput").addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+      addUrl();
+    }
+  });
 });
 
 function loadUrls() {
