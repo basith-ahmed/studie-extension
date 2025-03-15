@@ -4,7 +4,7 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
   chrome.storage.local.get(["blockedUrls"], (data) => {
     const blockedUrls = data.blockedUrls || [];
     const isBlocked = blockedUrls.some(
-      (site) => site.url === details.url && site.enabled
+      (site) => details.url.includes(site.url) && site.enabled
     );
 
     if (isBlocked) {
